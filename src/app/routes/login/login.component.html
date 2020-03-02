@@ -1,0 +1,44 @@
+<div>
+  <form nz-form [formGroup]="loginForm" class="custom-form">
+    <nz-form-item class="custom-form__item">
+      <nz-form-label>Username</nz-form-label>
+      <nz-form-control class="custom-form__control custom-form__control--full">
+        <input class="custom-form__input"
+               nzSize="large"
+               formControlName="username"
+               nz-input placeholder="Username or email" autocomplete="off" required />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="custom-form__item">
+      <nz-form-label>Password</nz-form-label>
+      <nz-form-control class="custom-form__control custom-form__control--full">
+        <input class="custom-form__input"
+               nzSize="large"
+               formControlName="password"
+               type="password"
+               nz-input placeholder="Password" autocomplete="off" required />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="custom-form__item" *ngIf="error">
+      <span nz-text nzType="danger">* You have entered an invalid username or password.</span>
+    </nz-form-item>
+
+    <nz-form-item class="custom-form__item">
+      <label nz-checkbox formControlName="remember">Keep me signed in</label>
+      <a href="#" class="hidden" style="margin-left: auto">Forgot your password?</a>
+    </nz-form-item>
+
+    <button class="button"
+            nz-button
+            nzType="primary"
+            type="submit"
+            nzBlock
+            nzSize="large"
+            (click)="submitForm()"
+            [nzLoading]="loading">
+      Sign In
+    </button>
+  </form>
+</div>

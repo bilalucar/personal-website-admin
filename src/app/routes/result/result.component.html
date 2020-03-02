@@ -1,0 +1,25 @@
+<ng-container [ngSwitch]="path">
+  <ng-container *ngSwitchCase="401">
+    <nz-result nzStatus="403" nzTitle="401" nzSubTitle="The request requires authentication.">
+      <div nz-result-extra>
+        <a routerLink="/login">
+          <button nz-button nzType="primary">Go To Login</button>
+        </a>
+      </div>
+    </nz-result>
+  </ng-container>
+  <ng-container *ngSwitchCase="403">
+    <nz-result nzStatus="403" nzTitle="403" nzSubTitle="Sorry, you are not authorized to access this page.">
+      <div nz-result-extra>
+        <a routerLink="/"><button nz-button nzType="primary">Go Back Home</button></a>
+      </div>
+    </nz-result>
+  </ng-container>
+  <ng-container *ngSwitchDefault>
+    <nz-result nzStatus="404" nzTitle="404" nzSubTitle="Sorry, the page you visited does not exist.">
+      <div nz-result-extra>
+        <a routerLink="/"><button nz-button nzType="primary">Go Back Home</button></a>
+      </div>
+    </nz-result>
+  </ng-container>
+</ng-container>

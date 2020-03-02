@@ -1,0 +1,22 @@
+/* logo */
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  height: 96px;
+  width: 200px;
+  transition: width 0.2s cubic-bezier(0.25, 0, 0.15, 1);
+
+  &__img {
+    cursor: pointer;
+    display: inline-block;
+    max-width: 85%;
+    max-height: 64px;
+  }
+
+  .layout--collapsed & {
+    width: 75px;
+  }
+}

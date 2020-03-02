@@ -1,0 +1,15 @@
+/* ant layout */
+.ant-layout {
+  min-height: 100%;
+
+  &-header {
+    background-color: $brand-color;
+    color: white;
+  }
+
+  &-content {
+    background: #fff;
+    padding: 24px;
+    margin: 0 20px;
+  }
+}

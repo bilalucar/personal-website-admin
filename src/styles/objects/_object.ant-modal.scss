@@ -1,0 +1,41 @@
+/* ant-modal customizations */
+
+.custom-modal {
+  margin: -15px -24px;
+
+  &__body {
+    padding: 10px 20px;
+  }
+  &__content {
+    flex: 1;
+    padding: 20px 20px 20px 40px;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+}
+
+.custom-modal-header {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  border-bottom: 1px solid #f6f6f6;
+  padding: 10px 20px;
+
+  &__icon {
+    color: $brand-color;
+    font-size: 24px;
+    margin-right: 10px;
+    max-height: 100%;
+    max-width: 100px;
+  }
+
+  &__title {
+    font-size: 20px;
+    line-height: 20px;
+    margin: 0;
+  }
+}

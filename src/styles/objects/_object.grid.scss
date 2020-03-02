@@ -1,0 +1,72 @@
+/* grid */
+
+.grid-container {
+  flex-basis: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-items: flex-start;
+  align-content: flex-start;
+}
+
+.grid-item {
+  flex: 0 1 50%;
+  padding: 15px;
+
+  @include mq($until: desktop) {
+    flex-basis: 100%;
+  }
+
+  &--quarter {
+    @include mq($from: desktop) {
+      flex-basis: 25%;
+    }
+  }
+
+  &--threequarter {
+    @include mq($from: desktop) {
+      flex-basis: 75%;
+    }
+  }
+
+  &--one-of-third {
+    @include mq($from: desktop) {
+      flex-basis: 33.333%;
+    }
+  }
+
+  &--two-of-third {
+    @include mq($from: desktop) {
+      flex-basis: 66.666%;
+    }
+  }
+
+  &--two-of-fifth {
+    @include mq($from: desktop) {
+      flex-basis: 40%;
+    }
+  }
+
+  &--three-of-fifth {
+    @include mq($from: desktop) {
+      flex-basis: 60%;
+    }
+  }
+
+  &--one-of-fifth {
+    @include mq($from: desktop) {
+      flex-basis: 20%;
+    }
+  }
+
+  &--full {
+    flex-basis: 100%;
+  }
+
+  &--spacing-sm {
+    padding: 10px;
+  }
+
+  &--no-space {
+    padding: 0;
+  }
+}
