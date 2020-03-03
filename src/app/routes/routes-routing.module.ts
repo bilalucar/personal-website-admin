@@ -12,6 +12,7 @@ import { ResultComponent } from './result/result.component';
 // guards
 import { AuthGuard } from '@core/security/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,7 @@ const routes: Routes = [
     component: LayoutDefaultComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'dashboard', component: DashboardComponent },
       { path: '401', component: ResultComponent },
       { path: '403', component: ResultComponent },
@@ -31,7 +32,8 @@ const routes: Routes = [
     component: FullscreenComponent,
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: 'login', component: LoginComponent }
+      { path: 'login', component: LoginComponent },
+      { path: 'signup', component: SignupComponent }
     ]
   },
   { path: '**', redirectTo: '' }

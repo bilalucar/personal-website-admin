@@ -1,29 +1,61 @@
-<nz-layout>
+<nz-layout [class.collapsed]="isCollapsed">
   <nz-header>
-    Header
+    <a class="ant-layout-header__logo">
+      {{ isCollapsed ? 'A' : 'Admin Panel' }}
+    </a>
+    <div class="ant-layout-header__nav-wrap">
+      <ul class="ant-layout-header__nav">
+        <li class="ant-layout-header__nav-item"></li>
+      </ul>
+      <ul class="ant-layout-header__nav">
+        <li class="ant-layout-header__nav-item" nz-dropdown [nzDropdownMenu]="headerUserMenu" nzPlacement="bottomRight">
+          <nz-avatar class="ant-layout__user-avatar" [nzSize]="32" nzIcon="user"></nz-avatar> Admin
+        </li>
+        <nz-dropdown-menu #headerUserMenu="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item><i nz-icon nzType="setting"></i>Account Settings</li>
+            <li nz-menu-item><i nz-icon nzType="logout"></i>Log Out</li>
+          </ul>
+        </nz-dropdown-menu>
+      </ul>
+    </div>
   </nz-header>
   <nz-layout>
-    <nz-sider nzWidth="200px" nzTheme="light">
-      <ul nz-menu nzMode="inline" class="sider-menu">
-        <li nz-menu-item routerLink="/dashboard" routerLinkActive="ant-menu-item-selected">
-          <i nz-icon nzType="dashboard"></i>
+    <nz-sider [nzCollapsible]="true" [(nzCollapsed)]="isCollapsed"  nzTheme="light">
+      <div class="ant-layout-sider__user" nz-dropdown [nzDropdownMenu]="sidebarUserMenu" nzPlacement="bottomLeft" nzTrigger="click">
+        <nz-avatar [class.ant-layout__user-avatar]="!isCollapsed" [nzSize]="32" nzIcon="user"></nz-avatar>
+        <div class="ant-layout-sider__user-info" *ngIf="!isCollapsed">
+          <strong>Admin</strong>
+          <div>ucarbilal</div>
+        </div>
+      </div>
+      <nz-dropdown-menu #sidebarUserMenu="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item><i nz-icon nzType="setting"></i>Account Settings</li>
+          <li nz-menu-item><i nz-icon nzType="logout"></i>Log Out</li>
+        </ul>
+      </nz-dropdown-menu>
+      <ul nz-menu [nzMode]="'vertical'" [nzInlineCollapsed]="isCollapsed">
+        <li nz-menu-item nz-tooltip nzPlacement="right" routerLink="/dashboard" routerLinkActive="ant-menu-item-selected"
+            [nzTitle]="isCollapsed ? 'Dashboard' : ''">
+        <span title>
+          <i nz-icon [style.font-size]="isCollapsed ? '24px' : ''" nzType="dashboard"></i>
           <span>Dashboard</span>
+        </span>
         </li>
-        <li nz-submenu nzIcon="user" nzTitle="Kullanıcılar">
-          <ul>
-            <li nz-menu-item>option1</li>
-            <li nz-menu-item>option2</li>
-            <li nz-menu-item>option3</li>
-            <li nz-menu-item>option4</li>
-          </ul>
+        <li nz-menu-item nz-tooltip nzPlacement="right" routerLink="/posts" routerLinkActive="ant-menu-item-selected"
+            [nzTitle]="isCollapsed ? 'Posts' : ''">
+        <span title>
+          <i nz-icon [style.font-size]="isCollapsed ? '24px' : ''" nzType="pushpin"></i>
+          <span>Posts</span>
+        </span>
         </li>
-        <li nz-submenu nzTitle="Yazılar" nzIcon="file-text">
-          <ul>
-            <li nz-menu-item>option5</li>
-            <li nz-menu-item>option6</li>
-            <li nz-menu-item>option7</li>
-            <li nz-menu-item>option8</li>
-          </ul>
+        <li nz-menu-item nz-tooltip nzPlacement="right" routerLink="/users" routerLinkActive="ant-menu-item-selected"
+            [nzTitle]="isCollapsed ? 'Users' : ''">
+        <span title>
+          <i nz-icon [style.font-size]="isCollapsed ? '24px' : ''" nzType="user"></i>
+          <span>Users</span>
+        </span>
         </li>
       </ul>
     </nz-sider>

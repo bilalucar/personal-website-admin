@@ -6,6 +6,10 @@
     flex-flow: row wrap;
     align-items: center;
     margin-bottom: 10px;
+
+    .fullscreen & {
+      margin-bottom: 20px;
+    }
   }
 
   &__label {

@@ -1,8 +1,8 @@
 <div>
   <form nz-form [formGroup]="loginForm" class="custom-form">
     <nz-form-item class="custom-form__item">
-      <nz-form-label>Username</nz-form-label>
-      <nz-form-control class="custom-form__control custom-form__control--full">
+      <nz-form-control class="custom-form__control custom-form__control--full"
+                       nzErrorTip="Please input your Username or Email!">
         <input class="custom-form__input"
                nzSize="large"
                formControlName="username"
@@ -11,8 +11,8 @@
     </nz-form-item>
 
     <nz-form-item class="custom-form__item">
-      <nz-form-label>Password</nz-form-label>
-      <nz-form-control class="custom-form__control custom-form__control--full">
+      <nz-form-control class="custom-form__control custom-form__control--full"
+                       nzErrorTip="Please input your Password!">
         <input class="custom-form__input"
                nzSize="large"
                formControlName="password"
@@ -30,15 +30,30 @@
       <a href="#" class="hidden" style="margin-left: auto">Forgot your password?</a>
     </nz-form-item>
 
-    <button class="button"
-            nz-button
-            nzType="primary"
-            type="submit"
-            nzBlock
-            nzSize="large"
-            (click)="submitForm()"
-            [nzLoading]="loading">
-      Sign In
-    </button>
+    <nz-form-item class="custom-form__item">
+      <button class="button"
+              nz-button
+              nzType="primary"
+              type="submit"
+              nzBlock
+              nzSize="large"
+              (click)="submitForm()"
+              [nzLoading]="loading">
+        Sign In
+      </button>
+    </nz-form-item>
+
+    <nz-form-item class="custom-form__item">
+      <button class="button"
+              nz-button
+              nzType="primary"
+              type="submit"
+              nzGhost
+              nzBlock
+              nzSize="large"
+              routerLink="/signup">
+        Sign Up
+      </button>
+    </nz-form-item>
   </form>
 </div>

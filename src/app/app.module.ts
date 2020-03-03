@@ -15,6 +15,9 @@ import { AppComponent } from './app.component';
 import { httpInterceptorProviders } from './http-interceptors';
 import { LayoutModule } from './layout/layout.module';
 import { RoutesModule } from './routes/routes.module';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import firebaseConfig from '@env/firebase';
 
 registerLocaleData(en);
 
@@ -35,7 +38,9 @@ const ngZorroConfig: NzConfig = {
     CoreModule,
     SharedModule,
     RoutesModule,
-    LayoutModule
+    LayoutModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

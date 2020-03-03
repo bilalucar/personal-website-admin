@@ -1,0 +1,22 @@
+/* fullscreen component */
+
+.fullscreen {
+  display: flex;
+  justify-content: center;
+  padding: 50px 0;
+  height: 100%;
+  background-image: url('/assets/images/fullscreen-bg.svg');
+  background-repeat: no-repeat;
+  background-position: center 110px;
+  background-size: 100%;
+  background-color: $background-color;
+
+  &__content {
+    flex: 0 1 400px;
+    padding: 10px;
+  }
+
+  h1 {
+    text-align: center;
+  }
+}

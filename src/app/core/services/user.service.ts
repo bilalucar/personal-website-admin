@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -13,7 +14,8 @@ export class UserService {
   activeUser: any;
 
   constructor(
-    private http: HttpClient
+      private auth: AngularFireAuth,
+      private http: HttpClient
   ) { }
 
   getAuthenticatedUser(): Observable<any> {
@@ -22,5 +24,9 @@ export class UserService {
         this.activeUser = res;
       })
     );
+  }
+
+  signUp(credential: User.EmailAndPasswordModel) {
+    return this.auth.createUserWithEmailAndPassword(credential.email, credential.password);
   }
 }

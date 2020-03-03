@@ -4,4 +4,6 @@ import { Component } from '@angular/core';
   selector: 'layout-default',
   templateUrl: './default.component.html'
 })
-export class LayoutDefaultComponent { }
+export class LayoutDefaultComponent {
+  isCollapsed = true;
+}
