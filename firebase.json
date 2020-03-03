@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "personal-webssite-admin",
+      "public": "dist/personal-webssite-admin",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

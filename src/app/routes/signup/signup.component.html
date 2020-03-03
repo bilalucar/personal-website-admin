@@ -1,0 +1,41 @@
+<div>
+  <form nz-form [formGroup]="signUpForm" class="custom-form">
+    <nz-form-item class="custom-form__item">
+      <nz-form-control class="custom-form__control custom-form__control--full"
+                       nzErrorTip="Please input your Email!">
+        <input class="custom-form__input"
+               nzSize="large"
+               formControlName="email"
+               nz-input placeholder="Email" autocomplete="off" required />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="custom-form__item">
+      <nz-form-control class="custom-form__control custom-form__control--full"
+                       nzErrorTip="Please input your Password!">
+        <input class="custom-form__input"
+               nzSize="large"
+               formControlName="password"
+               type="password"
+               nz-input placeholder="Password" autocomplete="off" required />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="custom-form__item" *ngIf="error">
+      <span nz-text nzType="danger">* You have entered an invalid username or password.</span>
+    </nz-form-item>
+
+    <nz-form-item class="custom-form__item">
+      <button class="button"
+              nz-button
+              nzType="primary"
+              type="submit"
+              nzBlock
+              nzSize="large"
+              (click)="submitForm()"
+              [nzLoading]="loading">
+        Sign Up
+      </button>
+    </nz-form-item>
+  </form>
+</div>

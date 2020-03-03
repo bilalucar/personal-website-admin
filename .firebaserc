@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "blog-269208": {
+      "hosting": {
+        "personal-webssite-admin": [
+          "blog-269208"
+        ]
+      }
+    }
+  }
+}
