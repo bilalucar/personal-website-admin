@@ -1,0 +1,71 @@
+<div class="content-header">
+    <h1>{{ type === 'create' ? 'Create' : 'Update' }} Post</h1>
+</div>
+<div class="post-detail" *ngIf="!loading">
+    <div class="grid-container">
+        <div class="grid-item grid-item--threequarter">
+            <form nz-form [formGroup]="postForm">
+                <nz-form-item>
+                    <nz-form-control>
+                        <input formControlName="title" nz-input nzSize="large" placeholder="Please enter title" autocomplete="off" required/>
+                    </nz-form-control>
+                </nz-form-item>
+                <div class="post-detail__url" *ngIf="postUrl?.length">
+                    <strong>Permalink: </strong> {{ blogUrl }}<p class="post-detail__slug" nz-paragraph nzEditable [(nzContent)]="postUrl"></p>
+                </div>
+                <nz-form-item>
+                    <nz-form-control>
+                        <textarea formControlName="summary" nz-input placeholder="Please enter url" autocomplete="off" required></textarea>
+                    </nz-form-control>
+                </nz-form-item>
+            </form>
+
+            <ckeditor class="post-detail__editor" [(ngModel)]="editorData"  [editor]="Editor"></ckeditor>
+        </div>
+        <div class="grid-item grid-item--quarter">
+            <div class="post-detail__postbox">
+                <div class="post-detail__postbox__header">
+                    Publish
+                </div>
+                <div class="post-detail__postbox__content">
+                    <div class="post-detail__postbox__content-item">
+                        <i nz-icon nzType="calendar"></i> Created Date: {{ createdDate | date: 'dd/MM/yyyy HH:mm' }}
+                    </div>
+                    <div class="post-detail__postbox__content-item">
+                        <i nz-icon nzType="user"></i> Author: {{ author }}
+                    </div>
+                    <div class="post-detail__postbox__content-item">
+                        <button nz-button
+                                nzType="primary"
+                                type="submit"
+                                (click)="submitForm()"
+                                [nzLoading]="buttonLoading">{{ type === 'create' ? 'Publish' : 'Update Post' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="post-detail__postbox">
+                <div class="post-detail__postbox__header">
+                    Featured Image
+                </div>
+                <div class="post-detail__postbox__content">
+                    <nz-upload
+                            nzName="avatar"
+                            nzListType="picture-card"
+                            [nzShowUploadList]="false"
+                            [nzBeforeUpload]="beforeUpload"
+                            [nzCustomRequest]="customReq">
+                        <ng-container *ngIf="!featuredImageUrl">
+                            <i class="upload-icon" nz-icon [nzType]="imageUploading ? 'loading' : 'plus'"></i>
+                            <div class="ant-upload-text">Upload</div>
+                        </ng-container>
+                        <img *ngIf="featuredImageUrl" [src]="featuredImageUrl" alt="Featured Image" class="post-detail__featured-image" />
+                    </nz-upload>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="loading">
+    Loading...
+</div>

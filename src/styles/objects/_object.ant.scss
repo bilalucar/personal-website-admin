@@ -1,0 +1,136 @@
+/* ant avatar */
+
+.ant {
+  &-avatar {
+    color: $dark-grey;
+    background-color: $med-grey;
+  }
+
+  &-form,
+  &-input,
+  &-typography {
+    color: $med-grey;
+  }
+
+  &-input,
+  &-upload.ant-upload-select-picture-card {
+    background-color: $background-color;
+  }
+
+  &-upload.ant-upload-select-picture-card {
+    border-color: #000;
+  }
+
+  &-layout {
+    min-height: 100%;
+    background-color: $background-color;
+
+    &-header {
+      background-color: #000;
+      color: white;
+      padding: 0 16px;
+      z-index: 19;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 64px;
+      box-shadow: 0 1px 10px rgba(0,0,0,.2);
+
+      &__logo {
+        display: block;
+        width: 200px;
+        margin-left: -16px;
+        transition: width .2s cubic-bezier(.25, 0, .15, 1);
+        font-size: 1.5em;
+        text-align: center;
+
+        .collapsed & {
+          width: 80px;
+        }
+      }
+
+      &__nav-wrap {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+      }
+
+      &__nav {
+        display: flex;
+        align-items: center;
+        margin: 0;
+        padding: 0;
+      }
+
+      &__nav-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 50px;
+        padding: 0 8px;
+        border-radius: 2px;
+        outline: 0;
+        cursor: pointer;
+        transition: background-color .3s;
+
+        &:hover {
+          color: #fff;
+          background-color: rgba(255,255,255,.2)!important;
+        }
+      }
+    }
+
+    &-sider {
+      width: 200px;
+      background-color: #000;
+
+      &__user {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 24px;
+        cursor: pointer;
+      }
+
+      &__user-info {
+        flex: 1;
+        overflow: hidden;
+        color: rgba(0, 0, 0, .65);
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .ant-menu-inline-collapsed > .ant-menu-item {
+        padding: 0 28px !important;
+      }
+    }
+
+    &-content {
+      padding-top: 24px;
+      padding-bottom: 24px;
+      margin: 0 20px;
+    }
+
+    &__user-avatar {
+      margin-right: 8px;
+    }
+  }
+}
+
+.ant-menu {
+  background-color: #000;
+  color: $dark-grey;
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background-color: $grey;
+}
+
+.ant-menu-horizontal > .ant-menu-item-selected {
+  font-weight: 500;
+}
+
+.ant-layout-sider-light .ant-layout-sider-trigger {
+  color: $grey;
+  background-color: #000;
+}

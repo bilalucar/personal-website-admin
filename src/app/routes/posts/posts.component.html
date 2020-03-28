@@ -1,0 +1,43 @@
+<div class="content-header">
+    <h1>Posts</h1>
+
+    <button nz-button
+            nzType="primary"
+            [routerLink]="['/posts/', 'new']"
+            type="submit">New
+    </button>
+</div>
+<div class="table">
+    <nz-table #basicTable
+              *ngIf="!loading"
+              [nzData]="posts"
+              [nzShowPagination]="posts && posts.length > TABLE_PAGE_SIZE">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of basicTable.data" [routerLink]="['/posts/', data.id]">
+            <td>
+                <img class="table__thumb" [src]="data.imageUrl" alt="Featured Image"/>
+            </td>
+            <td>{{data.title}}</td>
+            <td>{{data.author}}</td>
+            <td>{{data.timestamp * 1000 | date: 'dd/MM/yyyy HH:mm' }}</td>
+        </tr>
+        </tbody>
+    </nz-table>
+
+    <div *ngIf="loading">
+        <nz-skeleton [nzAvatar]="true" [nzParagraph]="false" [nzActive]="true"></nz-skeleton>
+        <nz-skeleton [nzAvatar]="true" [nzParagraph]="false" [nzActive]="true"></nz-skeleton>
+        <nz-skeleton [nzAvatar]="true" [nzParagraph]="false" [nzActive]="true"></nz-skeleton>
+        <nz-skeleton [nzAvatar]="true" [nzParagraph]="false" [nzActive]="true"></nz-skeleton>
+        <nz-skeleton [nzAvatar]="true" [nzParagraph]="false" [nzActive]="true"></nz-skeleton>
+        <nz-skeleton [nzAvatar]="true" [nzParagraph]="false" [nzActive]="true"></nz-skeleton>
+    </div>
+</div>
