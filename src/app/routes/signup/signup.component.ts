@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { validateFormGroup } from '@shared/utils/form.util';
-import { Router } from '@angular/router';
 import { AuthenticationService } from '@core/services/authentication.service';
+
+import { validateFormGroup } from '@shared/utils/form.util';
+import { RoleConstantEnum } from '@shared/enums/role-constant.enum';
 
 @Component({
   selector: 'app-signup',
@@ -15,14 +16,17 @@ export class SignupComponent implements OnInit, OnDestroy {
   loading = false;
   error = false;
 
+  roleConstantEnum = RoleConstantEnum;
+
   constructor(
     private fb: FormBuilder,
-    private authService: AuthenticationService,
-    private route: Router
+    private authService: AuthenticationService
   ) { }
 
   ngOnInit(): void {
     this.signUpForm = this.fb.group({
+      name: [null, [Validators.required]],
+      surname: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]]
     });
@@ -39,19 +43,27 @@ export class SignupComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const data: User.EmailAndPasswordModel = {
-      email: this.signUpForm.value.email,
-      password: this.signUpForm.value.password
+    const { name, surname, email, password } = this.signUpForm.value;
+
+    const data: User.AllUserModel = {
+      credential: { email, password },
+      info: {
+        id: '',
+        email,
+        name,
+        surname,
+        roles: [this.roleConstantEnum.ROLE_USER],
+        fullName: `${name} ${surname}`
+      }
     };
 
     this.loading = true;
     
-    this.authService.signUp(data).then(response => {
-      // this.userService.setActiveUser(response.user);
+    this.authService.signUp(data).then(() => {
       this.loading = false;
-      this.route.navigate(['/dashboard']);
-    }).catch(reason => {
+    }).catch(error => {
       this.loading = false;
+      console.log('error', error);
     });
   }
   ngOnDestroy(): void {}

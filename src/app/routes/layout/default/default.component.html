@@ -9,7 +9,7 @@
       </ul>
       <ul class="ant-layout-header__nav">
         <li class="ant-layout-header__nav-item" nz-dropdown [nzDropdownMenu]="headerUserMenu" nzTooltipPlacement="bottomRight">
-        <nz-avatar class="ant-layout__user-avatar" [nzSize]="32" nzIcon="user"></nz-avatar> Admin
+        <nz-avatar class="ant-layout__user-avatar" [nzSize]="32" nzIcon="user"></nz-avatar> {{ activeUser?.fullName }}
       </li>
         <nz-dropdown-menu #headerUserMenu="nzDropdownMenu">
           <ul nz-menu>
@@ -25,8 +25,8 @@
       <div class="ant-layout-sider__user" nz-dropdown [nzDropdownMenu]="sidebarUserMenu" nzTooltipPlacement="bottomLeft" nzTrigger="click">
         <nz-avatar [class.ant-layout__user-avatar]="!isCollapsed" [nzSize]="32" nzIcon="user"></nz-avatar>
         <div class="ant-layout-sider__user-info" *ngIf="!isCollapsed">
-          <strong>Admin</strong>
-          <div>ucarbilal</div>
+          <strong>{{ activeUser?.fullName }}</strong>
+          <div>{{ activeUser?.displayRoles }}</div>
         </div>
       </div>
       <nz-dropdown-menu #sidebarUserMenu="nzDropdownMenu">

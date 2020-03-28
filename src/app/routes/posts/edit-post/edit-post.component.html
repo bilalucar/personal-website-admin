@@ -10,9 +10,9 @@
                         <input formControlName="title" nz-input nzSize="large" placeholder="Please enter title" autocomplete="off" required/>
                     </nz-form-control>
                 </nz-form-item>
-                <div class="post-detail__url" *ngIf="postUrl?.length">
+                <div class="post-detail__url" *ngIf="postDetail?.url?.length">
                     <span class="post-detail__permalink-text">Permalink: </span>
-                    {{ blogUrl }}<p class="post-detail__slug" nz-paragraph nzEditable [(nzContent)]="postUrl"></p>
+                    {{ blogUrl }}<p class="post-detail__slug" nz-paragraph nzEditable [(nzContent)]="postDetail.url"></p>
                 </div>
                 <nz-form-item class="custom-form__item">
                     <nz-form-control>
@@ -21,7 +21,7 @@
                 </nz-form-item>
             </form>
 
-            <ckeditor class="post-detail__editor" [(ngModel)]="editorData"  [editor]="Editor"></ckeditor>
+            <ckeditor class="post-detail__editor" [(ngModel)]="postDetail.content"  [editor]="Editor"></ckeditor>
         </div>
         <div class="grid-item grid-item--quarter">
             <div class="post-detail__postbox">
@@ -30,12 +30,12 @@
                 </div>
                 <div class="post-detail__postbox__content">
                     <div class="post-detail__postbox__content-item">
-                        <i nz-icon nzType="calendar"></i> Created Date: {{ createdDate | date: 'dd/MM/yyyy HH:mm' }}
+                        <i nz-icon nzType="calendar"></i> Created Date: {{ postDetail.timestamp | date: 'dd/MM/yyyy HH:mm' }}
                     </div>
                     <div class="post-detail__postbox__content-item">
-                        <i nz-icon nzType="user"></i> Author: {{ author }}
+                        <i nz-icon nzType="user"></i> Author: {{ postDetail?.author }}
                     </div>
-                    <div class="post-detail__postbox__content-item">
+                    <div class="post-detail__postbox__content-item" *ngxPermissionsOnly="[roleConstantEnum.ROLE_ADMIN]">
                         <button nz-button
                                 nzType="primary"
                                 type="submit"
@@ -56,11 +56,11 @@
                             [nzShowUploadList]="false"
                             [nzBeforeUpload]="beforeUpload"
                             [nzCustomRequest]="customReq">
-                        <ng-container *ngIf="!featuredImageUrl">
+                        <ng-container *ngIf="!postDetail.imageUrl">
                             <i class="upload-icon" nz-icon [nzType]="imageUploading ? 'loading' : 'plus'"></i>
                             <div class="ant-upload-text">Upload</div>
                         </ng-container>
-                        <img *ngIf="featuredImageUrl" [src]="featuredImageUrl" alt="Featured Image" class="post-detail__featured-image" />
+                        <img *ngIf="postDetail.imageUrl" [src]="postDetail.imageUrl" alt="Featured Image" class="post-detail__featured-image" />
                     </nz-upload>
                 </div>
             </div>

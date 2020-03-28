@@ -1,14 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { PostService } from '@shared/services/post.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { convertToSlug, validateFormGroup } from '@shared/utils/form.util';
-import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, Observer } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+
+import { PostService } from '@shared/services/post.service';
+
+import { RoleConstantEnum } from '@shared/enums/role-constant.enum';
+import { convertToSlug, validateFormGroup } from '@shared/utils/form.util';
+
 import { environment } from '@env/environment';
+
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-edit-post',
@@ -20,18 +24,22 @@ export class EditPostComponent implements OnInit {
   loading: boolean;
   imageUploading: boolean;
   buttonLoading: boolean;
-  postDetail;
   postForm: FormGroup;
   type: 'edit' | 'create' = 'create';
-
   Editor = ClassicEditor;
-  editorData;
-  featuredImageUrl: string;
-  createdDate: Date = new Date();
-
   blogUrl = environment.blogUrl;
-  postUrl: string;
-  author: string;
+  roleConstantEnum = RoleConstantEnum;
+
+  postDetail: Post.PostModel = {
+    id: '',
+    author: '',
+    content: '',
+    imageUrl: '',
+    summary: '',
+    timestamp: new Date(),
+    title: '',
+    url: '',
+  };
 
   constructor(
       private activatedRoute: ActivatedRoute,
@@ -45,41 +53,26 @@ export class EditPostComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.id === 'new') {
-      this.editorData = '';
-      this.createFormGroup({});
+      this.createFormGroup(this.postDetail);
     } else {
       this.loading = true;
       this.postService.getPostDetail(this.id).subscribe(response => {
         this.type = 'edit';
         this.loading = false;
-        this.postDetail = response;
-        this.editorData = response.content;
+        this.postDetail = {
+          ...response,
+          timestamp: new Date(response.timestamp * 1000)
+        };
         this.createFormGroup(this.postDetail);
-      })
+      }, error => {
+        this.loading = false;
+        console.log('error while fetching post detail', error);
+      });
     }
   }
   
   createFormGroup(data?) {
-    const {
-      id = '',
-      imageUrl = '',
-      summary = '',
-      title = '',
-      timestamp = 0,
-      url = ''
-    } = data;
-
-    if (url) {
-      this.postUrl = url;
-    }
-
-    if (imageUrl) {
-      this.featuredImageUrl = imageUrl;
-    }
-
-    if (timestamp) {
-      this.createdDate = new Date(timestamp * 1000);
-    }
+    const { id, imageUrl, summary, title, timestamp, url } = data;
 
     this.postForm = this.fb.group({
       id: [id, []],
@@ -88,7 +81,7 @@ export class EditPostComponent implements OnInit {
     });
 
     this.postForm.get('title').valueChanges.subscribe(item => {
-      this.postUrl = convertToSlug(item);
+      this.postDetail.url = convertToSlug(item);
     });
   }
 
@@ -102,12 +95,9 @@ export class EditPostComponent implements OnInit {
     this.buttonLoading = true;
     
     const formData = {
+      ...this.postDetail,
       ...this.postForm.value,
-      content: this.editorData,
-      imageUrl: this.featuredImageUrl,
-      url: this.postUrl,
-      timestamp: Math.floor(new Date().getTime() / 1000),
-      author: 'Bilal Uçar'
+      timestamp: Math.floor(new Date().getTime() / 1000)
     };
     
     this.postService.createPost(formData).then(() => {
@@ -147,7 +137,7 @@ export class EditPostComponent implements OnInit {
     this.imageUploading = true;
 
     task.snapshotChanges().pipe(
-        finalize(() => this.postService.getFileRef(filePath).getDownloadURL().subscribe(item => this.featuredImageUrl = item))
+        finalize(() => this.postService.getFileRef(filePath).getDownloadURL().subscribe(item => this.postDetail.imageUrl = item))
     ).subscribe();
 
     task.percentageChanges().subscribe((percentage) => {

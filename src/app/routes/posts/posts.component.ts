@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
 import { PostService } from '@shared/services/post.service';
-import { map } from 'rxjs/operators';
+
+import { RoleConstantEnum } from '@shared/enums/role-constant.enum';
 
 @Component({
   selector: 'app-posts',
@@ -12,6 +14,7 @@ export class PostsComponent implements OnInit {
 
   loading = false;
   posts: Post.PostModel[];
+  roleConstantEnum = RoleConstantEnum;
 
   constructor(
       private postService: PostService

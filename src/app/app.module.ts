@@ -9,15 +9,19 @@ import { CoreModule } from '@core/core.module';
 import { RequestCache, RequestCacheWithMap } from '@core/services/request-cache.service';
 import { SharedModule } from '@shared/shared.module';
 
-import { en_US, NZ_CONFIG, NZ_I18N, NzConfig } from 'ng-zorro-antd';
-
 import { AppComponent } from './app.component';
 import { httpInterceptorProviders } from './http-interceptors';
 import { RoutesModule } from './routes/routes.module';
+
+// Firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import firebaseConfig from '@env/firebase';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+
+import firebaseConfig from '@env/firebase';
+
+import { en_US, NZ_CONFIG, NZ_I18N, NzConfig } from 'ng-zorro-antd';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 registerLocaleData(en);
 
@@ -40,7 +44,8 @@ const ngZorroConfig: NzConfig = {
     RoutesModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    NgxPermissionsModule.forRoot()
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

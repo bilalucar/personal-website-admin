@@ -2,22 +2,22 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 
-import { StorageService } from '@core/services/storage.service';
+import { NgxPermissionsService } from 'ngx-permissions';
+import { UserService } from '@core/services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  firebaseUser;
-
   constructor(
       private auth: AngularFireAuth,
-      private storageService: StorageService,
+      private permissionsService: NgxPermissionsService,
+      private userService: UserService,
       private router: Router
   ) {
     auth.authState.subscribe(response => {
-      this.firebaseUser = response;
+      this.userService.firebaseUser = response;
     })
   }
 
@@ -26,22 +26,28 @@ export class AuthenticationService {
   }
 
   isLoggedIn(): boolean {
-    return !!this.firebaseUser;
+    return !!this.userService.firebaseUser;
   }
 
-  signUp(credential: User.EmailAndPasswordModel) {
-    return this.auth.createUserWithEmailAndPassword(credential.email, credential.password);
+  signUp(data: User.AllUserModel) {
+    return this.auth.createUserWithEmailAndPassword(data.credential.email, data.credential.password).then((response) => {
+      this.userService.setCurrentUser(response.user);
+      data.info.id = response.user.uid;
+      this.userService.saveUserInfoDB(data.info).then(() => {
+        this.userService.setUserInfo(response.user.uid).then(() => {
+          this.router.navigateByUrl('/dashboard');
+        });
+      });
+    });
   }
 
   signIn(credential: User.EmailAndPasswordModel) {
     return this.auth.signInWithEmailAndPassword(credential.email, credential.password).then((response) => {
-      this.setCurrentUser(response.user);
-      this.router.navigateByUrl('/dashboard');
+      this.userService.setCurrentUser(response.user);
+      this.userService.setUserInfo(response.user.uid).then(() => {
+        this.router.navigateByUrl('/dashboard');
+      });
     });
-  }
-
-  setCurrentUser(currentUser) {
-    this.firebaseUser = currentUser;
   }
 
   signOut() {

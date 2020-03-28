@@ -2,6 +2,26 @@
   <form nz-form [formGroup]="signUpForm" class="custom-form">
     <nz-form-item class="custom-form__item">
       <nz-form-control class="custom-form__control custom-form__control--full"
+                       nzErrorTip="Please input your Name!">
+        <input class="custom-form__input"
+               nzSize="large"
+               formControlName="name"
+               nz-input placeholder="Name" autocomplete="off" required />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="custom-form__item">
+      <nz-form-control class="custom-form__control custom-form__control--full"
+                       nzErrorTip="Please input your Surname!">
+        <input class="custom-form__input"
+               nzSize="large"
+               formControlName="surname"
+               nz-input placeholder="Surname" autocomplete="off" required />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item class="custom-form__item">
+      <nz-form-control class="custom-form__control custom-form__control--full"
                        nzErrorTip="Please input your Email!">
         <input class="custom-form__input"
                nzSize="large"

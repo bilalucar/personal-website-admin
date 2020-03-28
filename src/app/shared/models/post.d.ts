@@ -5,18 +5,7 @@ declare namespace Post {
     content: string;
     imageUrl: string;
     summary: string;
-    timestamp: number;
-    title: string;
-    url: string;
-  }
-
-  export class PostClassModel {
-    id: string;
-    author: string;
-    content: string;
-    imageUrl: string;
-    summary: string;
-    timestamp: number;
+    timestamp: number | Date;
     title: string;
     url: string;
   }

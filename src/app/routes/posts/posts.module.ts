@@ -5,6 +5,7 @@ import { PostsRoutingModule } from './posts-routing.module';
 
 import { PostsComponent } from './posts.component';
 import { EditPostComponent } from './edit-post/edit-post.component';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 const COMPONENTS = [
   // page components
@@ -13,10 +14,11 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [
-    SharedModule,
-    PostsRoutingModule
-  ],
+    imports: [
+        SharedModule,
+        PostsRoutingModule,
+        NgxPermissionsModule
+    ],
   declarations: [
     ...COMPONENTS,
   ]

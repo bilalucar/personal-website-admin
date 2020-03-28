@@ -2,6 +2,7 @@
     <h1>Posts</h1>
 
     <button nz-button
+            *ngxPermissionsOnly="[roleConstantEnum.ROLE_ADMIN]"
             nzType="primary"
             [routerLink]="['/posts/', 'new']"
             type="submit">New
