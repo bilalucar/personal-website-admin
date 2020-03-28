@@ -1,0 +1,62 @@
+/* post */
+
+.post {
+  &-detail {
+    &__featured-image {
+      max-width: 100%;
+    }
+
+    &__url {
+      display: flex;
+      align-items: center;
+      height: 35px;
+    }
+
+    &__slug {
+      display: inline-block;
+      margin-bottom: 0;
+
+      textarea {
+        height: 20px;
+      }
+    }
+
+    &__editor {
+      height: 400px;
+      --ck-color-text: $med-grey;
+      background: $background-color;
+
+      .ck.ck-editor__main>.ck-editor__editable {
+        background: $background-color;
+      }
+    }
+
+    &__postbox {
+      background-color: $background-color;
+      margin-bottom: 15px;
+      border: 1px solid #000;
+      border-radius: 4px;
+      padding: 10px;
+
+      &__header {
+        font-weight: bold;
+        border-bottom: 1px solid #000;
+        padding-bottom: 10px;
+      }
+
+      &__content {
+        padding-top: 10px;
+      }
+
+      &__content-item + &__content-item {
+        padding-top: 10px;
+      }
+    }
+
+    .ant-upload.ant-upload-select-picture-card {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 0;
+    }
+  }
+}

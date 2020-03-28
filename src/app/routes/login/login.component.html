@@ -2,11 +2,11 @@
   <form nz-form [formGroup]="loginForm" class="custom-form">
     <nz-form-item class="custom-form__item">
       <nz-form-control class="custom-form__control custom-form__control--full"
-                       nzErrorTip="Please input your Username or Email!">
+                       nzErrorTip="Please input your Email!">
         <input class="custom-form__input"
                nzSize="large"
-               formControlName="username"
-               nz-input placeholder="Username or email" autocomplete="off" required />
+               formControlName="email"
+               nz-input placeholder="Email" autocomplete="off" required />
       </nz-form-control>
     </nz-form-item>
 
@@ -22,7 +22,7 @@
     </nz-form-item>
 
     <nz-form-item class="custom-form__item" *ngIf="error">
-      <span nz-text nzType="danger">* You have entered an invalid username or password.</span>
+      <span nz-text nzType="danger">* You have entered an invalid password.</span>
     </nz-form-item>
 
     <nz-form-item class="custom-form__item">

@@ -13,11 +13,11 @@ import { en_US, NZ_CONFIG, NZ_I18N, NzConfig } from 'ng-zorro-antd';
 
 import { AppComponent } from './app.component';
 import { httpInterceptorProviders } from './http-interceptors';
-import { LayoutModule } from './layout/layout.module';
 import { RoutesModule } from './routes/routes.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import firebaseConfig from '@env/firebase';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 registerLocaleData(en);
 
@@ -38,9 +38,9 @@ const ngZorroConfig: NzConfig = {
     CoreModule,
     SharedModule,
     RoutesModule,
-    LayoutModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireStorageModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

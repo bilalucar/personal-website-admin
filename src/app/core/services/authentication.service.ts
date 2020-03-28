@@ -1,33 +1,36 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 import { StorageService } from '@core/services/storage.service';
-import { UserService } from '@core/services/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
+  firebaseUser;
+
   constructor(
-    private http: HttpClient,
-    private storageService: StorageService,
-    private userService: UserService,
-    private injector: Injector
-  ) { }
+      private auth: AngularFireAuth,
+      private storageService: StorageService,
+      private router: Router
+  ) {}
 
-  goTo(url: string): void {
-    const router = this.injector.get(Router);
-
-    router.navigateByUrl(url);
+  signUp(credential: User.EmailAndPasswordModel) {
+    return this.auth.createUserWithEmailAndPassword(credential.email, credential.password);
   }
 
-  hasToken(): boolean {
-    return !!this.storageService.get('access_token');
+  signIn(credential: User.EmailAndPasswordModel) {
+    return this.auth.signInWithEmailAndPassword(credential.email, credential.password).then((response) => {
+      this.firebaseUser = response.user;
+      this.router.navigateByUrl('/dashboard');
+    });
   }
 
-  getAuthorizationToken(): string | null {
-    return this.storageService.get('access_token');
+  signOut() {
+    this.auth.signOut().then(() => {
+      this.router.navigateByUrl('/login');
+    });
   }
 }

@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { validateFormGroup } from '@shared/utils/form.util';
-import { UserService } from '@core/services/user.service';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '@core/services/authentication.service';
 
 @Component({
   selector: 'app-signup',
@@ -16,7 +17,8 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService
+    private authService: AuthenticationService,
+    private route: Router
   ) { }
 
   ngOnInit(): void {
@@ -44,8 +46,12 @@ export class SignupComponent implements OnInit, OnDestroy {
 
     this.loading = true;
     
-    this.userService.signUp(data).then(response => {
-      console.log('response', response);
+    this.authService.signUp(data).then(response => {
+      // this.userService.setActiveUser(response.user);
+      this.loading = false;
+      this.route.navigate(['/dashboard']);
+    }).catch(reason => {
+      this.loading = false;
     });
   }
   ngOnDestroy(): void {}

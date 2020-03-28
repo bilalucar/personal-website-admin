@@ -1,6 +1,12 @@
 /* #Base Rules for common HTML elements
    ========================================================================== */
 
+body {
+  font-size: 14px;
+  color: $med-grey;
+  background-color: #000;
+}
+
 a:focus {
   text-decoration: none;
 }
@@ -12,4 +18,5 @@ h4,
 h5,
 h6 {
   font-weight: 600;
+  color: $med-grey;
 }

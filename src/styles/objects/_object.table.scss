@@ -1,0 +1,17 @@
+/* table */
+
+.table {
+  background-color: #000;
+  padding: 15px;
+
+  &__thumb {
+    width: 100%;
+    max-width: 40px;
+    max-height: 40px;
+    height: auto;
+  }
+
+  .ant-skeleton {
+    margin-bottom: 20px;
+  }
+}

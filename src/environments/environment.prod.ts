@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  blogUrl: 'https://bilalucar.com/blog/'
 };

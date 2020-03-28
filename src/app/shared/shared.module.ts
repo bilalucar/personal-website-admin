@@ -5,9 +5,11 @@ import { RouterModule } from '@angular/router';
 
 // region: third libs
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 const THIRD_MODULES = [
-  NgZorroAntdModule
+  NgZorroAntdModule,
+  CKEditorModule
 ];
 // endregion
 

@@ -33,3 +33,23 @@ export const passwordValidator = (control: FormControl) => {
     return { error: true, passwordValidator: true };
   }
 };
+
+
+export const convertToSlug = (title: string) => {
+  if (!title) {
+    return null;
+  }
+
+  title = title.trim();
+
+  return title
+      .toLocaleLowerCase('tr')
+      .replace(/ğ/g, 'g')
+      .replace(/ü/g, 'u')
+      .replace(/ş/g, 's')
+      .replace(/ı/g, 'i')
+      .replace(/ö/g, 'o')
+      .replace(/ç/g, 'c')
+      .replace(/ /g,'-')
+      .replace(/[^\w-]+/g,'');
+};
