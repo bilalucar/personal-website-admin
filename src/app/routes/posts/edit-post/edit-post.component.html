@@ -4,18 +4,19 @@
 <div class="post-detail" *ngIf="!loading">
     <div class="grid-container">
         <div class="grid-item grid-item--threequarter">
-            <form nz-form [formGroup]="postForm">
-                <nz-form-item>
+            <form nz-form [formGroup]="postForm" class="custom-form">
+                <nz-form-item class="custom-form__item">
                     <nz-form-control>
                         <input formControlName="title" nz-input nzSize="large" placeholder="Please enter title" autocomplete="off" required/>
                     </nz-form-control>
                 </nz-form-item>
                 <div class="post-detail__url" *ngIf="postUrl?.length">
-                    <strong>Permalink: </strong> {{ blogUrl }}<p class="post-detail__slug" nz-paragraph nzEditable [(nzContent)]="postUrl"></p>
+                    <span class="post-detail__permalink-text">Permalink: </span>
+                    {{ blogUrl }}<p class="post-detail__slug" nz-paragraph nzEditable [(nzContent)]="postUrl"></p>
                 </div>
-                <nz-form-item>
+                <nz-form-item class="custom-form__item">
                     <nz-form-control>
-                        <textarea formControlName="summary" nz-input placeholder="Please enter url" autocomplete="off" required></textarea>
+                        <textarea [nzAutosize]="{ minRows: 3, maxRows: 6 }" formControlName="summary" nz-input placeholder="Please enter url" autocomplete="off" required></textarea>
                     </nz-form-control>
                 </nz-form-item>
             </form>

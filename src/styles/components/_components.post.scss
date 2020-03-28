@@ -10,11 +10,17 @@
       display: flex;
       align-items: center;
       height: 35px;
+      margin-bottom: 10px;
+    }
+
+    &__permalink-text {
+      padding-right: 10px;
     }
 
     &__slug {
       display: inline-block;
       margin-bottom: 0;
+      width: 100%;
 
       textarea {
         height: 20px;
@@ -23,24 +29,26 @@
 
     &__editor {
       height: 400px;
-      --ck-color-text: $med-grey;
-      background: $background-color;
+      --ck-color-text: $primary-text-color;
+      --ck-color-toolbar-background: $light-bg;
+      --ck-color-base-background: $light-bg;
+      --ck-color-base-border: $primary-text-color;
+      --ck-color-toolbar-border: $primary-text-color;
 
-      .ck.ck-editor__main>.ck-editor__editable {
-        background: $background-color;
+      .ck.ck-toolbar {
+        border: 0.5px solid $primary-text-color;
       }
     }
 
     &__postbox {
-      background-color: $background-color;
+      background-color: $light-bg;
       margin-bottom: 15px;
-      border: 1px solid #000;
+      box-shadow: $base-shadow;
       border-radius: 4px;
       padding: 10px;
 
       &__header {
         font-weight: bold;
-        border-bottom: 1px solid #000;
         padding-bottom: 10px;
       }
 

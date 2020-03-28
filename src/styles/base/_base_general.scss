@@ -3,8 +3,8 @@
 
 body {
   font-size: 14px;
-  color: $med-grey;
-  background-color: #000;
+  color: $primary-text-color;
+  background-color: $body-bg;
 }
 
 a:focus {
@@ -18,5 +18,5 @@ h4,
 h5,
 h6 {
   font-weight: 600;
-  color: $med-grey;
+  color: $primary-text-color;
 }

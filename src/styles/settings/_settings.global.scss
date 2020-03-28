@@ -3,16 +3,26 @@
    ========================================================================== */
 
 /* Color */
-$brand-color: #53e0db;
-$grey: #eeeeee;
-$med-grey: #bbbbbb;
-$dark-grey: #777777;
+$brand-color: #4ed8da;
+$primary-text-color: rgba(white, 0.4);
 
-$background-color: #191919;
+$primary-bg: #222529;
+$secondary-bg: #2D3136;
+$light-bg: #393e44;
 
 $info: #24B6F7;
 $warning: #ffcc66;
 $danger: #ee4444;
+
+$body-bg: $primary-bg;
+$header-bg: $secondary-bg;
+$logo-bg: $light-bg;
+$sidebar-bg: $secondary-bg;
+
+$logo-color: #fff;
+
+/* Shadows */
+$base-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.4);
 
 /* Dimensions */
 $sidebar-width: 200px;

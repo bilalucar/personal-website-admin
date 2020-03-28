@@ -15,7 +15,19 @@ export class AuthenticationService {
       private auth: AngularFireAuth,
       private storageService: StorageService,
       private router: Router
-  ) {}
+  ) {
+    auth.authState.subscribe(response => {
+      this.firebaseUser = response;
+    })
+  }
+
+  goTo(route: string): void {
+    this.router.navigateByUrl(route);
+  }
+
+  isLoggedIn(): boolean {
+    return !!this.firebaseUser;
+  }
 
   signUp(credential: User.EmailAndPasswordModel) {
     return this.auth.createUserWithEmailAndPassword(credential.email, credential.password);
@@ -23,9 +35,13 @@ export class AuthenticationService {
 
   signIn(credential: User.EmailAndPasswordModel) {
     return this.auth.signInWithEmailAndPassword(credential.email, credential.password).then((response) => {
-      this.firebaseUser = response.user;
+      this.setCurrentUser(response.user);
       this.router.navigateByUrl('/dashboard');
     });
+  }
+
+  setCurrentUser(currentUser) {
+    this.firebaseUser = currentUser;
   }
 
   signOut() {
