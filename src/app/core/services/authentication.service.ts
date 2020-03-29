@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 
 import { NgxPermissionsService } from 'ngx-permissions';
 import { UserService } from '@core/services/user.service';
+import { createMD5Hash } from '@shared/utils/crypto.util';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,13 @@ export class AuthenticationService {
   }
 
   signUp(data: User.AllUserModel) {
-    return this.auth.createUserWithEmailAndPassword(data.credential.email, data.credential.password).then((response) => {
+    const { credential: { email } } = data;
+
+    let { credential: { password } } = data;
+
+    password = createMD5Hash(password);
+
+    return this.auth.createUserWithEmailAndPassword(email, password).then((response) => {
       this.userService.setCurrentUser(response.user);
       data.info.id = response.user.uid;
       this.userService.saveUserInfoDB(data.info).then(() => {
@@ -42,7 +49,13 @@ export class AuthenticationService {
   }
 
   signIn(credential: User.EmailAndPasswordModel) {
-    return this.auth.signInWithEmailAndPassword(credential.email, credential.password).then((response) => {
+    const { email } = credential;
+
+    let { password } = credential;
+
+    password = createMD5Hash(password);
+
+    return this.auth.signInWithEmailAndPassword(email, password).then((response) => {
       this.userService.setCurrentUser(response.user);
       this.userService.setUserInfo(response.user.uid).then(() => {
         this.router.navigateByUrl('/dashboard');

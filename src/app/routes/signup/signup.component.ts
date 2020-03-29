@@ -5,6 +5,7 @@ import { AuthenticationService } from '@core/services/authentication.service';
 
 import { validateFormGroup } from '@shared/utils/form.util';
 import { RoleConstantEnum } from '@shared/enums/role-constant.enum';
+import { createGravatarUrl } from '@shared/utils/crypto.util';
 
 @Component({
   selector: 'app-signup',
@@ -49,11 +50,14 @@ export class SignupComponent implements OnInit, OnDestroy {
       credential: { email, password },
       info: {
         id: '',
-        email,
+        username: email,
         name,
         surname,
+        fullName: `${name} ${surname}`,
+        email,
+        avatar: createGravatarUrl(email),
+        created: new Date(),
         roles: [this.roleConstantEnum.ROLE_USER],
-        fullName: `${name} ${surname}`
       }
     };
 

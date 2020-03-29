@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  gravatarBaseUrl: 'https://www.gravatar.com/avatar/',
   blogUrl: 'https://bilalucar.com/blog/'
 };
 
