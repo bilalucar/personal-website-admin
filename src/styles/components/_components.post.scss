@@ -31,12 +31,21 @@
       height: 400px;
       --ck-color-text: $primary-text-color;
       --ck-color-toolbar-background: $light-bg;
-      --ck-color-base-background: $light-bg;
       --ck-color-base-border: $primary-text-color;
       --ck-color-toolbar-border: $primary-text-color;
 
       .ck.ck-toolbar {
         border: 0.5px solid $primary-text-color;
+      }
+
+      .ck.ck-editor__main>.ck-editor__editable {
+        min-height: 350px;
+        background: $light-bg;
+      }
+
+      .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+        color: rgba(255, 255, 255, 0.25);
+        background: rgba(57, 62, 68, 0.35);
       }
     }
 
@@ -59,12 +68,27 @@
       &__content-item + &__content-item {
         padding-top: 10px;
       }
+
+      &__button-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        padding-top: 10px;
+      }
+    }
+
+    &__tag-input {
+      width: 80px;
+    }
+
+    &__select {
+      width: 140px;
     }
 
     .ant-upload.ant-upload-select-picture-card {
       width: 100%;
       margin-right: 0;
       margin-bottom: 0;
+      background-color: $light-bg;
     }
   }
 }

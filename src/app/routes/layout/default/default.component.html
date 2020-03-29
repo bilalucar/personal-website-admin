@@ -32,7 +32,7 @@
     </div>
   </nz-header>
   <nz-layout>
-    <nz-sider [nzCollapsible]="true" [(nzCollapsed)]="isCollapsed" nzTheme="light">
+    <nz-sider [nzCollapsible]="true" [(nzCollapsed)]="isCollapsed" nzTheme="dark">
       <div class="ant-layout-sider__user"
            nz-dropdown
            [nzDropdownMenu]="sidebarUserMenu"
@@ -82,6 +82,7 @@
   </nz-layout>
 </nz-layout>
 
+<!-- TODO: will be moved to the new component -->
 <nz-drawer
         [nzClosable]="false"
         [nzVisible]="showSettingsDrawer"
@@ -159,25 +160,22 @@
       </nz-form-control>
     </nz-form-item>
     <div nz-row nzJustify="end" [nzGutter]="8">
-      <div nz-col nzSpan="6">
+      <div nz-col>
         <button nz-button
                 nzType="primary"
-                nzBlock
                 type="submit"
                 [disabled]="buttonLoading"
                 (click)="closeDrawer()"> Cancel
         </button>
       </div>
-      <div nz-col nzSpan="6">
+      <div nz-col>
         <button nz-button
                 nzType="primary"
                 type="submit"
-                nzBlock
                 (click)="updateProfile()"
                 [nzLoading]="buttonLoading"> Update
         </button>
       </div>
     </div>
   </form>
-
 </nz-drawer>

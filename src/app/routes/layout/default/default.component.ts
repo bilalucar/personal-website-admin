@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthenticationService } from '@core/services/authentication.service';
@@ -11,7 +11,7 @@ import { validateFormGroup } from '@shared/utils/form.util';
   selector: 'layout-default',
   templateUrl: './default.component.html'
 })
-export class LayoutDefaultComponent {
+export class LayoutDefaultComponent implements OnInit{
 
   isCollapsed = true;
   activeUser: User.UserInfoModel;
@@ -23,9 +23,11 @@ export class LayoutDefaultComponent {
   constructor(
       private authService: AuthenticationService,
       private userService: UserService,
-      private fb: FormBuilder
-  ) {
-    this.activeUser = userService.firebaseUserInfo;
+      private fb: FormBuilder) {
+  }
+
+  ngOnInit(): void {
+    this.activeUser = this.userService.firebaseUserInfo;
 
     if (this.activeUser.roles) {
       this.activeUser.displayRoles = this.activeUser.roles.map(item => this.roleEnum[item]).join(', ')
@@ -63,7 +65,7 @@ export class LayoutDefaultComponent {
     this.showSettingsDrawer = false;
   }
 
-  updateProfile() {
+  updateProfile(): void {
     validateFormGroup(this.profileForm);
 
     if (this.profileForm.invalid) {
@@ -74,7 +76,8 @@ export class LayoutDefaultComponent {
 
     const formData: User.UserInfoModel = {
       ...this.activeUser,
-      ...this.profileForm.value
+      ...this.profileForm.value,
+      updated: new Date()
     };
 
     this.userService.saveUserInfoDB(formData).then(() => {

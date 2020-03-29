@@ -1,7 +1,6 @@
 /* table */
 
 .table {
-
   &__clickable-row {
     cursor: pointer;
   }
@@ -15,21 +14,5 @@
 
   .ant-skeleton {
     margin-bottom: 20px;
-  }
-
-  .ant-table thead > tr > th {
-    color: #fff;
-    background: $secondary-bg;
-    border-bottom: 1px solid $primary-text-color;
-  }
-
-  .ant-table tbody > tr > td {
-    border-bottom: 1px solid $primary-text-color;
-    color: $primary-text-color;
-    background: $light-bg;
-  }
-
-  .ant-table tbody > tr.ant-table-row:hover > td {
-    background: $secondary-bg;
   }
 }

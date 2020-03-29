@@ -3,44 +3,81 @@
 </div>
 <div class="post-detail" *ngIf="!loading">
     <div class="grid-container">
-        <div class="grid-item grid-item--threequarter">
+        <div class="grid-item grid-item--two-of-third">
             <form nz-form [formGroup]="postForm" class="custom-form">
                 <nz-form-item class="custom-form__item">
                     <nz-form-control>
-                        <input formControlName="title" nz-input nzSize="large" placeholder="Please enter title" autocomplete="off" required/>
+                        <input formControlName="title"
+                               nz-input
+                               nzSize="large"
+                               placeholder="Please enter title"
+                               autocomplete="off"
+                               required/>
                     </nz-form-control>
                 </nz-form-item>
                 <div class="post-detail__url" *ngIf="postDetail?.url?.length">
                     <span class="post-detail__permalink-text">Permalink: </span>
-                    {{ blogUrl }}<p class="post-detail__slug" nz-paragraph nzEditable [(nzContent)]="postDetail.url"></p>
+                    {{ blogUrl }}
+                    <p class="post-detail__slug" nz-paragraph [nzEditable]="isAdmin" [(nzContent)]="postDetail.url"></p>
                 </div>
                 <nz-form-item class="custom-form__item">
                     <nz-form-control>
-                        <textarea [nzAutosize]="{ minRows: 3, maxRows: 6 }" formControlName="summary" nz-input placeholder="Please enter url" autocomplete="off" required></textarea>
+                        <textarea [nzAutosize]="{ minRows: 3, maxRows: 6 }"
+                                  formControlName="summary"
+                                  nz-input
+                                  placeholder="Please enter summary"
+                                  autocomplete="off"
+                                  required>
+                        </textarea>
                     </nz-form-control>
                 </nz-form-item>
             </form>
 
-            <ckeditor class="post-detail__editor" [(ngModel)]="postDetail.content"  [editor]="Editor"></ckeditor>
+            <ckeditor class="post-detail__editor" [disabled]="!isAdmin" [(ngModel)]="postDetail.content"  [editor]="Editor"></ckeditor>
         </div>
-        <div class="grid-item grid-item--quarter">
+        <div class="grid-item grid-item--one-of-third">
             <div class="post-detail__postbox">
                 <div class="post-detail__postbox__header">
                     Publish
                 </div>
                 <div class="post-detail__postbox__content">
-                    <div class="post-detail__postbox__content-item">
-                        <i nz-icon nzType="calendar"></i> Created Date: {{ postDetail.timestamp | date: 'dd/MM/yyyy HH:mm' }}
+                    <div class="post-detail__postbox__content-item" *ngIf="postDetail.created">
+                        <i nz-icon nzType="calendar"></i> Created: {{ postDetail.created | date: 'dd/MM/yyyy HH:mm' }}
+                    </div>
+                    <div class="post-detail__postbox__content-item" *ngIf="postDetail.updated">
+                        <i nz-icon nzType="calendar"></i> Updated: {{ postDetail.updated | date: 'dd/MM/yyyy HH:mm' }}
+                    </div>
+                    <div class="post-detail__postbox__content-item" *ngIf="postDetail.state">
+                        <i nz-icon
+                           [nzType]="postDetail.state === postStateConstantEnum.PUBLISHED
+                           ? 'check-circle'
+                           : (postDetail.state === postStateConstantEnum.PENDING_REVIEW ? 'clock-circle' : 'exclamation-circle')"></i>
+                        Status:
+                        <nz-select class="post-detail__select"
+                                   [(ngModel)]="postDetail.state"
+                                   nzSize="small"
+                                   [nzDisabled]="!isAdmin">
+                            <nz-option [nzValue]="postStateConstantEnum.PUBLISHED" nzLabel="Published"></nz-option>
+                            <nz-option [nzValue]="postStateConstantEnum.PENDING_REVIEW" nzLabel="Pending Review"></nz-option>
+                            <nz-option [nzValue]="postStateConstantEnum.DRAFT" nzLabel="Draft"></nz-option>
+                        </nz-select>
                     </div>
                     <div class="post-detail__postbox__content-item">
-                        <i nz-icon nzType="user"></i> Author: {{ postDetail?.author }}
+                        <i nz-icon nzType="user"></i> Author:
+                        <nz-select class="post-detail__select"
+                                   [(ngModel)]="postDetail.authorId"
+                                   nzSize="small"
+                                   [nzDisabled]="!isAdmin">
+                            <nz-option [nzValue]="activeUser.id" [nzLabel]="activeUser.fullName"></nz-option>
+                        </nz-select>
                     </div>
-                    <div class="post-detail__postbox__content-item" *ngxPermissionsOnly="[roleConstantEnum.ROLE_ADMIN]">
+                    <div class="post-detail__postbox__button-wrapper">
                         <button nz-button
+                                *ngxPermissionsOnly="[roleConstantEnum.ROLE_ADMIN]"
                                 nzType="primary"
                                 type="submit"
                                 (click)="submitForm()"
-                                [nzLoading]="buttonLoading">{{ type === 'create' ? 'Publish' : 'Update Post' }}
+                                [nzLoading]="buttonLoading">{{ type === 'create' ? 'Save' : 'Update' }}
                         </button>
                     </div>
                 </div>
@@ -53,20 +90,46 @@
                     <nz-upload
                             nzName="avatar"
                             nzListType="picture-card"
+                            [nzDisabled]="!isAdmin"
                             [nzShowUploadList]="false"
                             [nzBeforeUpload]="beforeUpload"
                             [nzCustomRequest]="customReq">
-                        <ng-container *ngIf="!postDetail.imageUrl">
+                        <ng-container *ngIf="!postDetail.featuredImage">
                             <i class="upload-icon" nz-icon [nzType]="imageUploading ? 'loading' : 'plus'"></i>
-                            <div class="ant-upload-text">Upload</div>
+                            <div class="ant-upload-text">Click to upload</div>
                         </ng-container>
-                        <img *ngIf="postDetail.imageUrl" [src]="postDetail.imageUrl" alt="Featured Image" class="post-detail__featured-image" />
+                        <img *ngIf="postDetail.featuredImage"
+                             [src]="postDetail.featuredImage"
+                             alt="Featured Image"
+                             class="post-detail__featured-image"/>
                     </nz-upload>
+                    <p *ngIf="postDetail.featuredImage" class="text-center">Click the image to edit or update</p>
+                </div>
+            </div>
+            <div class="post-detail__postbox">
+                <div class="post-detail__postbox__header">
+                    Tags
+                </div>
+                <div class="post-detail__postbox__content">
+                    <nz-tag *ngFor="let tag of postDetail.tags; let i = index"
+                            (nzAfterClose)="handleClose(tag)">
+                        {{ sliceTagName(tag) }}
+                    </nz-tag>
+                    <nz-tag *ngIf="!tagInputVisible && isAdmin" class="editable-tag" nzNoAnimation (click)="showInput()">
+                        <i nz-icon nzType="plus"></i> New Tag
+                    </nz-tag>
+                    <input
+                        #tagInputElement
+                        nz-input
+                        nzSize="small"
+                        *ngIf="tagInputVisible"
+                        type="text"
+                        [(ngModel)]="tagInputValue"
+                        class="post-detail__tag-input"
+                        (blur)="handleInputConfirm()"
+                        (keydown.enter)="handleInputConfirm()"/>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div *ngIf="loading">
-    Loading...
 </div>
